@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>Milestone Advancement Framework</title>
+  <desc>Stylised milestone marker with an ascending path and star, representing character progression and milestone advancement.</desc>
+  <defs>
+    <linearGradient id="stoneGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D8D8D8"/>
+      <stop offset="100%" stop-color="#8A8A8A"/>
+    </linearGradient>
+    <linearGradient id="pathGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2B7FFF"/>
+      <stop offset="100%" stop-color="#6EC6FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <circle cx="256" cy="256" r="236" fill="#1E2430" stroke="#4B5563" stroke-width="10"/>
+  <g filter="url(#shadow)">
+    <path d="M160 380 L160 190 C160 120 205 80 256 80 C307 80 352 120 352 190 L352 380 Z" fill="url(#stoneGradient)" stroke="#555" stroke-width="8"/>
+    <rect x="145" y="372" width="222" height="28" rx="6" fill="#666"/>
+    <text x="256" y="220" text-anchor="middle" font-family="serif" font-size="70" font-weight="bold" fill="#444">I</text>
+  </g>
+  <path d="M180 345 C215 325 230 300 245 265 C260 235 290 205 325 180" fill="none" stroke="url(#pathGradient)" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="205" cy="330" r="10" fill="#FFFFFF"/>
+  <circle cx="240" cy="280" r="10" fill="#FFFFFF"/>
+  <circle cx="285" cy="225" r="10" fill="#FFFFFF"/>
+  <g transform="translate(330,170)">
+    <path d="M0,-28 L8,-8 L29,-8 L12,5 L18,26 L0,14 L-18,26 L-12,5 L-29,-8 L-8,-8 Z" fill="#FFD54A" stroke="#C69A00" stroke-width="3"/>
+  </g>
+</svg>
