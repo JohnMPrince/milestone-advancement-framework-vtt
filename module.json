@@ -1,1 +1,33 @@
-{}
+{
+  "id": "milestone-advancement-framework-vtt",
+  "title": "Milestone Advancement Framework for Foundry VTT",
+  "description": "A system-agnostic milestone advancement framework for Foundry VTT.",
+  "version": "0.0.1",
+
+  "authors": [
+    {
+      "name": "John Prince"
+    }
+  ],
+
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+
+  "styles": ["styles/milestone-advancement-framework.css"],
+
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+
+  "packs": [],
+
+  "url": "",
+  "manifest": "",
+  "download": ""
+}
