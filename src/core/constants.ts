@@ -1,0 +1,1 @@
+// src/core/constants.ts

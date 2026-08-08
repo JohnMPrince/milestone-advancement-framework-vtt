@@ -6,6 +6,7 @@
 
     "strict": true,
     "noImplicitAny": true,
+    "noEmit": true,
 
     "sourceMap": true,
 
