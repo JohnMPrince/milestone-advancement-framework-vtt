@@ -15,6 +15,7 @@
     "verified": "14"
   },
 
+  "esmodules": ["dist/milestone-advancement-framework.js"],
   "styles": ["styles/milestone-advancement-framework.css"],
 
   "languages": [
