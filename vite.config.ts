@@ -1,22 +1,22 @@
 // vite.config.ts
 
-import { defineConfig } from "vite";
-import { resolve } from "path";
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
   build: {
-    outDir: "dist",
+    outDir: 'dist',
     emptyOutDir: true,
 
     lib: {
-      entry: resolve(__dirname, "src/main.ts"),
-      formats: ["es"],
-      fileName: () => "milestone-advancement-framework.js",
+      entry: resolve(__dirname, 'src/main.ts'),
+      formats: ['es'],
+      fileName: () => 'milestone-advancement-framework.js',
     },
 
     rollupOptions: {
       output: {
-        entryFileNames: "milestone-advancement-framework.js",
+        entryFileNames: 'milestone-advancement-framework.js',
       },
     },
 
