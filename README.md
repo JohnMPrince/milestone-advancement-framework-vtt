@@ -209,3 +209,7 @@ export const MODULE = {
 ```
 
 The module ID and name should be referenced through `MODULE.ID` and `MODULE.NAME` rather than duplicated throughout the codebase.
+
+### Testing Branch Ruleset
+
+This is a change to test that merge requires a build before proceeding.
