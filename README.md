@@ -81,3 +81,53 @@ The project's code-quality configuration is maintained in the following files:
 - `package.json` — Development tooling commands.
 
 Generated build output and dependencies are excluded from code-quality formatting and analysis where appropriate.
+
+## Development and Quality Checks
+
+The project uses automated tooling to maintain code quality and ensure that the module can be built successfully.
+
+### Local Checks
+
+The following npm scripts can be run locally before committing changes:
+
+| Command                | Purpose                                                           |
+| ---------------------- | ----------------------------------------------------------------- |
+| `npm run lint`         | Runs ESLint against the project                                   |
+| `npm run format`       | Formats the project using Prettier                                |
+| `npm run format:check` | Checks that files conform to the project's Prettier configuration |
+| `npm run typecheck`    | Performs TypeScript type checking without generating output       |
+| `npm run build`        | Builds the module using Vite                                      |
+
+It is recommended to run the quality checks before creating a pull request.
+
+### Continuous Integration
+
+The project uses GitHub Actions for continuous integration.
+
+CI runs automatically when:
+
+- Changes are pushed to `main`.
+- A pull request is opened or updated against `main`.
+
+The CI pipeline performs the following checks:
+
+1. Installs dependencies using `npm ci`.
+2. Runs ESLint.
+3. Checks code formatting with Prettier.
+4. Performs TypeScript type checking.
+5. Builds the module using Vite.
+6. Verifies that the expected build output is generated.
+
+A pull request must pass the required CI checks before it can be merged.
+
+### Build Output
+
+The Vite build generates the module's compiled output in the `dist` directory.
+
+The `dist` directory is the build output consumed by the Foundry VTT module. Source files and development tooling remain outside the distribution output.
+
+### Automated Testing
+
+Automated tests are not currently part of the CI pipeline.
+
+A dedicated testing framework and test suite will be introduced in a future milestone. Once established, automated tests will be added to the CI pipeline alongside the existing linting, formatting, type-checking, and build validation.
