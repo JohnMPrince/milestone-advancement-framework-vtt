@@ -209,3 +209,5 @@ export const MODULE = {
 ```
 
 The module ID and name should be referenced through `MODULE.ID` and `MODULE.NAME` rather than duplicated throughout the codebase.
+
+### Addendum
