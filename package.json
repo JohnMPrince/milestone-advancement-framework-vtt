@@ -1,6 +1,6 @@
 {
   "name": "milestone-advancement-framework-vtt",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "dev": "vite",
+    "dev": "vite build --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format:check": "prettier --check .",
