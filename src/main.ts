@@ -1,3 +1,3 @@
 // main.ts
 
-import './hooks/init.js';
+import './hooks';

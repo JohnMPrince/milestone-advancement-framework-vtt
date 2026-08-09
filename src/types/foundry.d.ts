@@ -1,3 +1,5 @@
 // src/types/foundry.d.ts
 
-//// <reference types="@League-of-foundry-developers/foundry-vtt-types" />
+/// <reference types="fvtt-types" />
+
+export {};
