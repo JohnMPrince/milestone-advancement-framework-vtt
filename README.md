@@ -131,3 +131,81 @@ The `dist` directory is the build output consumed by the Foundry VTT module. Sou
 Automated tests are not currently part of the CI pipeline.
 
 A dedicated testing framework and test suite will be introduced in a future milestone. Once established, automated tests will be added to the CI pipeline alongside the existing linting, formatting, type-checking, and build validation.
+
+## Module Lifecycle
+
+The Milestone Advancement Framework uses Foundry VTT's module lifecycle hooks to initialise and prepare the module during startup.
+
+Lifecycle hooks are located in the `src/hooks/` directory and are registered through a central `src/hooks/index.ts` entry point.
+
+### Lifecycle Flow
+
+The module entry point loads the lifecycle hook registration:
+
+```text
+src/main.ts
+    │
+    ▼
+src/hooks/index.ts
+    │
+    ├── init.ts
+    │
+    └── ready.ts
+```
+
+### `init`
+
+The `init` hook runs during Foundry VTT's initialisation phase.
+
+MAF uses this phase for early module setup, including functionality that needs to be registered before the remainder of Foundry has finished loading.
+
+```ts
+Hooks.once('init', () => {
+  // Module initialisation
+});
+```
+
+### `ready`
+
+The `ready` hook runs once Foundry VTT has completed its startup process and the game environment is available.
+
+MAF uses this phase for functionality that depends on Foundry's fully initialised game environment.
+
+```ts
+Hooks.once('ready', () => {
+  // Module ready processing
+});
+```
+
+### Hook Organisation
+
+Each lifecycle hook is maintained in its own source file rather than placing all startup logic in the module entry point.
+
+This provides a clear separation between lifecycle concerns and allows additional Foundry hooks to be introduced without making `main.ts` a central collection of unrelated logic.
+
+The `src/hooks/index.ts` file is responsible for registering the available hooks.
+
+### Foundry Type Definitions
+
+MAF is written in TypeScript and uses the Foundry VTT type definitions through the `fvtt-types` path alias.
+
+The Foundry type definitions are referenced from the project's declaration file:
+
+```ts
+import 'fvtt-types';
+```
+
+This makes Foundry globals such as `Hooks` available to TypeScript without requiring runtime imports.
+
+### Module Constants
+
+The module identity is defined centrally through the `MODULE` constant:
+
+```ts
+export const MODULE = {
+  ID: 'milestone-advancement-framework',
+  NAME: 'Milestone Advancement Framework',
+} as const;
+```
+
+The module ID and name should be referenced through `MODULE.ID` and `MODULE.NAME` rather than duplicated throughout the codebase.
