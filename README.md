@@ -2,6 +2,22 @@
 
 A Foundry VTT version 14 compatible project built to provide milestone advancement framework for supported systems on Foundry VTT.
 
+## Version 0.0.1
+
+Initial build of the Module which established the module infrastructure in Foundry VTT.
+
+## Version 0.0.2
+
+Established Development tools and configured Vite Builds and module packaging. As part of this version, a GitHub Build Pipeline was built and verified.
+
+## Version 0.0.3
+
+Implemented the Foundry Module Lifecycle hooks to respond to init, setup and ready events.
+
+## Version 0.0.4 (Current)
+
+Established the Core Service Architecture of the module and System Adapter Architecture for supporting game systems. Also implemented a Game Setting dialog for the module.
+
 ### Foundry VTT Types
 
 The project targets Foundry VTT v14.

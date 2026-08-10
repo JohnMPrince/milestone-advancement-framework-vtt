@@ -1,5 +1,14 @@
 {
   "MAF": {
-    "ModuleName": "Milestone Advancement Framework"
+    "ModuleName": "Milestone Advancement Framework",
+    "Settings": {
+      "ShowStartupDialog": {
+        "Name": "Show Startup Dialog",
+        "Hint": "Display the Milestone Advancement Framework startup dialog when loading a world."
+      }
+    }
+  },
+  "milestone-advancement-framework": {
+    "Name": "Milestone Advancement Framework"
   }
 }
