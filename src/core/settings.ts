@@ -25,9 +25,19 @@ const showStartupDialogSetting: ModuleSettingConfig = {
   default: true,
 };
 
+const debugModeSetting: ModuleSettingConfig = {
+  name: 'MAF.Settings.DebugMode.Name',
+  hint: 'MAF.Settings.DebugMode.Hint',
+  scope: 'client',
+  config: true,
+  type: Boolean,
+  default: false,
+};
+
 export function registerSettings(): void {
   const initGame = game as InitGame;
   const settings = initGame.settings as ModuleSettings;
 
   settings.register(MODULE.ID, SETTINGS.SHOW_STARTUP_DIALOG, showStartupDialogSetting);
+  settings.register(MODULE.ID, SETTINGS.DEBUG_MODE, debugModeSetting);
 }

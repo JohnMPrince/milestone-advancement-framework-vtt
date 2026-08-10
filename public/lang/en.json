@@ -5,6 +5,10 @@
       "ShowStartupDialog": {
         "Name": "Show Startup Dialog",
         "Hint": "Display the Milestone Advancement Framework startup dialog when loading a world."
+      },
+      "DebugMode": {
+        "Name": "Debug Mode",
+        "Hint": "Enable detailed Milestone Advancement Framework diagnostic logging."
       }
     }
   },
