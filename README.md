@@ -211,3 +211,140 @@ export const MODULE = {
 The module ID and name should be referenced through `MODULE.ID` and `MODULE.NAME` rather than duplicated throughout the codebase.
 
 ### Addendum
+
+### Component: System Adapter
+
+The System Adapter provides as system-agnostic interface between the Milestone Advancement Framework and the active Foundry game system.
+
+## Core Responsibilities
+
+- Identifying whether the active system is supported.
+- Accessing system-specific actor/party data.
+- Reading the information MAF needs.
+- Writing MAF-related data where appropriate.
+- Translating system-specific structures into MAF's common model.
+
+## MAF Data Model
+
+MAF
+│
+├── Party
+│ ├── Members
+│ └── Milestones
+│
+└── Character
+└── Level
+
+## Introducing the System Adapter Manager
+
+Foundry game.system.id
+│
+├── Adapter Manager
+│ ├── dnd5e system adapter
+│ ├── pf2e system adapter
+
+# MAF Service Responsibility Overview
+
+The Milestone Advancement Framework separates responsibilities across services and adapters to maintain a system-agnostic architecture.
+
+## MilestoneAdvancementService
+
+The `MilestoneAdvancementService` acts as the application-level orchestration layer for MAF.
+
+Responsibilities:
+
+- ✅ Create MAF services
+- ✅ Register MAF components
+- ✅ Coordinate startup and service initialisation
+
+The service is responsible for composing the MAF runtime environment but does not contain system-specific or milestone-specific logic.
+
+---
+
+## SystemAdapterManager
+
+The `SystemAdapterManager` manages the available system integrations.
+
+Responsibilities:
+
+- ✅ Store registered system adapters
+- ✅ Resolve the appropriate adapter for the active game system
+
+The manager provides the bridge between the MAF framework and supported game systems while keeping system selection logic isolated.
+
+---
+
+## MilestoneService
+
+The `MilestoneService` owns milestone-related behaviour and lifecycle management.
+
+Responsibilities:
+
+- ✅ Manage milestone lifecycle
+
+The service handles milestone concepts and rules without requiring knowledge of the underlying game system implementation.
+
+---
+
+## Dnd5eSystemAdapter
+
+The `Dnd5eSystemAdapter` provides the D&D 5e-specific implementation of the system adapter contract.
+
+Responsibilities:
+
+- ✅ Translate D&D 5e structures into MAF-compatible data
+
+The adapter isolates D&D 5e-specific knowledge from the core MAF framework, allowing additional game systems to be supported without modifying core services.
+
+# System Adapter Architecture Decision
+
+## Overview
+
+MAF uses a system adapter architecture to maintain a system-agnostic core framework.
+
+System-specific implementations are isolated behind the `ISystemAdapter` contract and managed through the `SystemAdapterManager`.
+
+## Architectural Principle
+
+> System adapters are registered and resolved by `SystemAdapterManager`. Core MAF services consume MAF concepts and do not directly depend on game-system implementations.
+
+## Responsibilities
+
+### SystemAdapterManager
+
+The `SystemAdapterManager` is responsible for:
+
+- Registering available system adapters.
+- Resolving the appropriate adapter for the active Foundry system.
+- Providing a consistent access point between MAF and system-specific implementations.
+
+### System Adapters
+
+System adapters provide the translation layer between Foundry game systems and MAF.
+
+Responsibilities include:
+
+- Understanding system-specific data structures.
+- Translating system data into MAF-compatible concepts.
+- Hiding implementation details from the core framework.
+
+### Core MAF Services
+
+Core services such as `MilestoneService` operate on MAF concepts and lifecycle management.
+
+They should:
+
+- Remain system agnostic.
+- Avoid direct references to Foundry system implementations.
+- Interact with system-specific behaviour only through adapter contracts.
+
+This separation allows MAF to support additional game systems without modifying core framework logic.
+
+## Benefits
+
+This architecture provides:
+
+- **Extensibility** — New systems can be added by implementing `ISystemAdapter`.
+- **Maintainability** — System-specific changes are isolated from core functionality.
+- **Testability** — Core services can be tested independently from specific game systems.
+- **Stability** — Changes to one system adapter do not affect unrelated systems.

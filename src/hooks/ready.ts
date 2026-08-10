@@ -1,13 +1,16 @@
 // src/hooks/ready.ts
 
-import { MODULE } from '../core/constants.js';
-import { MAFService } from '../services/maf-service.js';
+import { MODULE } from '../core/constants/core';
+import { MilestoneAdvancementService } from '../services/milestone-advancement-service';
 
 Hooks.once('ready', () => {
-  const mafService = new MAFService();
+  const service = new MilestoneAdvancementService();
 
-  mafService.initialise();
-  game.maf = mafService;
+  service.initialise();
+
+  game.maf = {
+    service,
+  };
 
   console.log(`${MODULE.NAME} | Ready`);
 });
