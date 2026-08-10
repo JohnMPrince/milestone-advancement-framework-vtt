@@ -1,9 +1,13 @@
 // src/types/maf.d.ts
 
-import { MAFService } from '../services/maf-service';
+import { MilestoneAdvancementService } from '../services/milestone-advancement-service';
 
 declare global {
   interface Game {
-    maf: MAFService;
+    maf: {
+      service: MilestoneAdvancementService;
+    };
   }
 }
+
+export {};

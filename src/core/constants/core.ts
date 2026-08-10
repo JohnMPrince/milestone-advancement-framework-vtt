@@ -1,4 +1,4 @@
-// src/core/constants.ts
+// src/core/constants/core.ts
 
 export const MODULE = {
   ID: 'milestone-advancement-framework',
