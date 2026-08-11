@@ -2,7 +2,7 @@
   "id": "milestone-advancement-framework-vtt",
   "title": "Milestone Advancement Framework",
   "description": "A system-agnostic milestone advancement framework for Foundry VTT.",
-  "version": "0.0.4",
+  "version": "0.0.6",
 
   "authors": [
     {
