@@ -7,6 +7,4 @@ export interface CompatibilityResult {
   message: string;
 }
 
-export interface ICompatibilityValidator {
-  validate(): CompatibilityResult;
-}
+
