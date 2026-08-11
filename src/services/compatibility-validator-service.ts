@@ -12,7 +12,7 @@ export class CompatibilityValidatorService implements ICompatibilityValidator {
     if (typeof game === 'undefined' || !game) {
       return {
         status: 'incompatible',
-        message: 'Foundry VTT runtime is unavailable',
+        message: 'Foundry VTT runtime is unavailable.',
       };
     }
 
