@@ -14,9 +14,17 @@ Established Development tools and configured Vite Builds and module packaging. A
 
 Implemented the Foundry Module Lifecycle hooks to respond to init, setup and ready events.
 
-## Version 0.0.4 (Current)
+## Version 0.0.4
 
 Established the Core Service Architecture of the module and System Adapter Architecture for supporting game systems. Also implemented a Game Setting dialog for the module.
+
+## Version 0.0.5
+
+Implementation of a logging framework that uses dependency injection. This will allow logging throughout the module through a standard approach.
+
+## Version 0.0.6 (Current)
+
+Created the initial user interface for the Application which is available via macro call.
 
 ### Foundry VTT Types
 

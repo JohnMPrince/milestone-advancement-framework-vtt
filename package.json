@@ -1,6 +1,6 @@
 {
   "name": "milestone-advancement-framework-vtt",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^10.0.1",

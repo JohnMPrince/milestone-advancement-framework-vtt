@@ -22,13 +22,13 @@ export class MilestoneAdvancementService {
     try {
       this.logger.info('Initialising Milestone Advancement Service');
 
-      this.logger.debug('Registering System Adapters started');
+      this.logger.debug('Registering System Adapters: started');
       this.registerSystemAdapters();
-      this.logger.debug('Registering System Adapters completed');
+      this.logger.debug('Registering System Adapters: completed');
 
-      this.logger.debug('Resolving System Adapters started');
+      this.logger.debug('Resolving System Adapters: started');
       this.resolveSystemAdapter();
-      this.logger.debug('Resolving System Adapters completed');
+      this.logger.debug('Resolving System Adapters: completed');
     } catch (error) {
       this.logger.error('Failed to initialise Milestone Advancement Service', error);
       throw error;
@@ -41,11 +41,11 @@ export class MilestoneAdvancementService {
 
   private registerSystemAdapters(): void {
     this.logger.debug(
-      `Request for System Adapter registration: ${SUPPORTED_SYSTEMS.DND5E} - requested`,
+      `Request for System Adapter registration: ${SUPPORTED_SYSTEMS.DND5E}: requested`,
     );
     this.adapterManager.register(new Dnd5eSystemAdapter()); // Register DnD5e as the Initial system. This list will grow.
     this.logger.debug(
-      `Request for System Adapter registration: ${SUPPORTED_SYSTEMS.DND5E} - approved`,
+      `Request for System Adapter registration: ${SUPPORTED_SYSTEMS.DND5E}: approved`,
     );
   }
 
