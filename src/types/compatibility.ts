@@ -6,5 +6,3 @@ export interface CompatibilityResult {
   status: CompatibilityStatus;
   message: string;
 }
-
-
