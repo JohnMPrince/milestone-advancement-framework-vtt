@@ -1,6 +1,6 @@
 // src/hooks/setup.ts
 
-import { MilestoneAdvancementService } from '../services/milestone-advancement-service';
+import { MilestoneAdvancementService } from '../services';
 import { MODULE } from '../core/constants/core';
 
 import type { ILogger } from '../services/logger-interface';

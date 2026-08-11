@@ -1,7 +1,7 @@
 // src/types/maf.d.ts
 
 import { ApplicationManager } from '../applications';
-import { MilestoneAdvancementService } from '../services/milestone-advancement-service';
+import { MilestoneAdvancementService } from '../services';
 
 declare global {
   interface Game {
