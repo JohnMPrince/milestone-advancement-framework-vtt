@@ -20,6 +20,10 @@ Established the Core Service Architecture and System Adapter Architecture to sup
 
 Implemented a logging framework using dependency injection, providing a standard approach to logging throughout the module.
 
-## Version 0.0.6 (Current)
+## Version 0.0.6
 
 Implemented the initial Application Framework and user interface, providing the first MAF application interface accessible through a macro.
+
+## Version 0.1.0 (Current)
+
+Created initial documentation structure and implemented the Foundry Compatibility validation service.
