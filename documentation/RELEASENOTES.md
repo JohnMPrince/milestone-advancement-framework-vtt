@@ -24,6 +24,10 @@ Implemented a logging framework using dependency injection, providing a standard
 
 Implemented the initial Application Framework and user interface, providing the first MAF application interface accessible through a macro.
 
-## Version 0.1.0 (Current)
+## Version 0.1.0
 
 Created initial documentation structure and implemented the Foundry Compatibility validation service.
+
+## Version 0.1.1 (Current)
+
+Built the initial Milestone Domain Model that will be leveraged by the module.
