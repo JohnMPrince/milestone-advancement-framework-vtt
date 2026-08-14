@@ -10,14 +10,13 @@ This will broken down by subject area to make it easier to identify specific dec
 
 The following is a list of the key decisions made surrounding the design of the Domain Model:
 
-```text
-| Identifier | Statement                                              | Status  |
-|   DM-001   | A milestone represents campaign progression            | complete |
-|   DM-002   | Milestone and MilestoneAward are distinct concepts     | complete |
-|   DM-003   | Milestone identity uses a human-readable `key`         | complete |
-|   DM-004   | Milestone `name` is separate from its identity         | complete |
-|   DM-005   |
-```
+| Identifier | Statement                                          | Status   |
+| ---------- | -------------------------------------------------- | -------- |
+| DM-001     | A milestone represents campaign progression        | complete |
+| DM-002     | Milestone and MilestoneAward are distinct concepts | complete |
+| DM-003     | Milestone identity uses a human-readable `key`     | complete |
+| DM-004     | Milestone `name` is separate from its identity     | complete |
+| DM-005     | Core Milestone data defined                        | complete |
 
 ### DM-001 A milestone represents campaign progression
 
