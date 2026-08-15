@@ -42,5 +42,7 @@ npm run build
 
 ## Documentation
 
-- `documentation/DEVELOPMENTNOTES.md` — Architecture, development conventions and implementation guidance.
+- `documentation/ARCHITECTURE.md` - Architectural decisions and reasoning.
+- `documentation/DEVELOPMENTNOTES.md` — Development conventions and implementation guidance.
+- `documentation/DOMAINMODEL.md` - Describes the Domain Model that is used by the module.
 - `documentation/RELEASENOTES.md` — Release history and notable changes.
