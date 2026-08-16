@@ -277,10 +277,111 @@ Invalid domain state is rejected rather than allowing an invalid object to be cr
 
 ## Core Service Architecture
 
+### Integration Point
+
+Below shows how the Core Service Architecture is embedded into the Milestone Advancement Framework (MAF):
+
+```text
+Foundry / Application Layer
+          │
+          ▼
+       Services
+          │
+          ▼
+   System Adapter Layer
+          │
+          ▼
+     Game System
+```
+
+### Current Service State
+
+```text
+                         ┌──────────────────────────┐
+                         │    Foundry / UI Layer    │
+                         └────────────┬─────────────┘
+                                      │
+                                      ▼
+                    ┌───────────────────────────────┐
+                    │     MAF Application/Services  │
+                    └───────────────┬───────────────┘
+                                    │
+                  ┌─────────────────┴─────────────────┐
+                  │                                   │
+                  ▼                                   ▼
+       ┌──────────────────────┐          ┌────────────────────────┐
+       │ Compatibility        │          │ Milestone Registration │
+       │ Validator Service    │          │ Service                │
+       │                      │          │                        │
+       │ ICompatibility       │          │ IMilestoneRegistration │
+       │ Validator            │          │ Service                │
+       └──────────┬───────────┘          └───────────┬────────────┘
+                  │                                  │
+                  │                                  ▼
+                  │                       ┌──────────────────────┐
+                  │                       │      Milestone       │
+                  │                       │    Domain Model      │
+                  │                       └──────────────────────┘
+                  │
+                  │
+                  ▼
+       ┌─────────────────────────────────────────────────────────┐
+       │              System Adapter Framework                   │
+       │                                                         │
+       │                 SystemAdapterManager                    │
+       │                         │                               │
+       │              ┌──────────┴──────────┐                    │
+       │              ▼                     ▼                    │
+       │       ISystemAdapter        D&D 5e Adapter              │
+       │                                      ...                │
+       └─────────────────────────────────────────────────────────┘
+```
+
+### Key Decisions
+
+The following is a list of the key decisions made surrounding the design of the Core Service Architecture:
+
+| Identifier | Statement                                                                                      | Status   |
+| ---------- | ---------------------------------------------------------------------------------------------- | -------- |
+| CSA-001    | MAF Services encapsulate application/domain operations using explicit boundaries               | Accepted |
+| CSA-002    | MAF Services will have a contract defined by an interface                                      | Accepted |
+| CSA-003    | Milestone Advancement Service will orchestrate and provide access to MAF services              | Accepted |
+| CSA-004    | Milestone service operations to be defined                                                     | Deferred |
+| CSA-005    | Logger service provided through dependency injection to the MAF                                | Accepted |
+| CSA-006    | Compatibility Validator Service ensures compatibility with the game system and foudry versions | Accepted |
+| CSA-007    | Milestone creation and registration are separate operations                                    | Accepted |
+| CSA-008    | Milestone registration is implemented as a service                                             | Accepted |
+| CSA-009    | The registration service has an interface                                                      | Accepted |
+| CSA-010    | The milestone key is the registration identity                                                 | Accepted |
+| CSA-011    | Milestone keys must be unique within the registration mechanism                                | Accepted |
+| CSA-012    | Registration preserves the domain Milestone                                                    | Accepted |
+| CSA-013    | Domain validation remains the responsibility of the Milestone                                  | Accepted |
+| CSA-014    | Registration is independent of awarding                                                        | Accepted |
+| CSA-015    | Registration is system-agnostic                                                                | Accepted |
+| CSA-016    | Registration provides the retrieval boundary required by awarding                              | Accepted |
+
+### CSA-001 MAF Services encapsulate application/domain operations using explicit boundaries
+
+MAF services encapsulate application/domain operations and provide explicit boundaries between the domain model, system adapters, and Foundry/application infrastructure. Services are implemented as testable classes, with interfaces used where an explicit service contract is beneficial. System-specific behaviour is delegated to the system adapter layer rather than embedded within system-agnostic services.
+
+### CSA-002
+
 ## System Adapter Architecture
 
 ## Logging
 
 ## Lifecycle Hooks
 
-## Testing Architecture
+## Testing Architecture / Testing Strategy
+
+### Key Decisions
+
+The following is a list of the key decisions made surrounding the design of the Testing Architecture / Testing Strategy:
+
+| Identifier | Statement                                                                          | Status   |
+| ---------- | ---------------------------------------------------------------------------------- | -------- |
+| TAS-001    | Acceptance criteria determine required behaviour, not necessarily individual tests | Accepted |
+
+### TAS-001 Acceptance criteria determine required behaviour, not necessarily individual tests
+
+Each acceptance criterion should be assessed to determine the most appropriate form of verification. Behavioural requirements should generally be covered by automated tests, while architectural boundaries, design constraints, and domain responsibilities may be verified through implementation review and documented design decisions. Tests should provide meaningful behavioural assurance rather than exist solely to achieve one-to-one coverage of acceptance criteria.
