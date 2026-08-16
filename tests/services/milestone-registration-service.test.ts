@@ -89,5 +89,45 @@ describe('MilestoneRegistrationService', () => {
       );
       expect(service.get('defeat-strahd')).toBe(originalMilestone);
     });
+
+    it('retains domain information and metadata for a registered milestone', () => {
+      const metadata = {
+        campaign: 'Curse of Strahd',
+        importance: 'major',
+      };
+
+      const milestone = new Milestone({
+        key: 'defeat-strahd',
+        name: 'Defeat Strahd',
+        description: 'The party defeats Strahd von Zarovich.',
+        type: 'defeated-boss',
+        createdBy: 'test-gm',
+        createdAt: new Date('2026-08-16T12:00:00Z'),
+        metadata,
+      });
+
+      const service = new MilestoneRegistrationService();
+
+      service.register(milestone);
+
+      const registeredMilestone = service.get('defeat-strahd');
+
+      expect(registeredMilestone).toEqual(milestone);
+      expect(registeredMilestone?.metadata).toEqual(metadata);
+    });
+
+    it('does not register a milestone when it is created', () => {
+      const milestone = new Milestone({
+        key: 'defeat-strahd',
+        name: 'Defeat Strahd',
+        description: 'The party defeats Strahd von Zarovich.',
+        createdBy: 'test-gm',
+        createdAt: new Date(),
+      });
+
+      const service = new MilestoneRegistrationService();
+
+      expect(service.get(milestone.key)).toBeUndefined();
+    });
   });
 });
