@@ -187,6 +187,7 @@ The current service layer includes:
 
 - `MilestoneAdvancementService` — Coordinates the initialisation of the milestone advancement framework and system adapter resolution.
 - `MilestoneService` — Provides the service boundary for milestone-related application logic.
+- `MilestoneRegistrationService` — Provides the capability to manage the registration and deregistration of milestones.
 - `CompatibilityValidatorService` — Provides runtime compatibility validation.
 - `Logger` — Provides the standardised logging implementation used throughout the framework.
 
@@ -200,6 +201,7 @@ Current service interfaces include:
 
 - `IMilestoneService`
 - `ICompatibilityValidator`
+- `IMilestoneRegistrationService`
 - `ILogger`
 
 Interfaces allow consumers to depend on the required behaviour rather than a specific implementation.
@@ -276,6 +278,29 @@ The validator currently checks that:
 The service returns a CompatibilityResult indicating whether the runtime is currently compatible with the expected MAF environment.
 
 Further system-specific compatibility is handled through the System Adapter Architecture.
+
+### Milestone Registration Service
+
+MAF-2.2 introduced MilestoneRegistrationService and its interface, IMilestoneRegistrationService.
+
+The service:
+
+- registers valid `Milestone` domain objects;
+- uses the milestone `key` as its stable registration identity;
+- rejects duplicate keys deterministically;
+- allows milestones with identical names when their keys differ;
+- retrieves registered milestones by key;
+- preserves the registered domain object and its metadata.
+
+#### Domain Boundary
+
+Validation of milestone invariants remains the responsibility of the `Milestone` domain model established in **MAF-2.1**. The registration service does not duplicate domain validation.
+
+Creation and registration are separate operations. Constructing a `Milestone` does not register it; registration must be explicitly requested through `MilestoneRegistrationService`.
+
+#### Awarding Boundary
+
+Registration does not award a milestone or modify advancement state. The registration mechanism establishes the availability of milestone definitions for subsequent operations. The awarding lifecycle will be addressed by MAF-2.3.
 
 ### Service Design Principles
 
@@ -1042,6 +1067,20 @@ Type safety should be maintained wherever practical, and `unknown` should be pre
 Changes should conform to the project's ESLint and Prettier configuration.
 
 Developers should run the relevant formatting, linting, type-checking and build validation before committing changes.
+
+### Test-Driven Development
+
+MAF-2.2 marked the transition to a more deliberate **Test-Driven Development (TDD)** workflow for new feature implementation.
+
+The implementation process was refined to:
+
+1. Review the acceptance criteria.
+2. Define test contracts for meaningful observable behaviours.
+3. Write the test before implementing the required behaviour where appropriate.
+4. Implement the minimum behaviour required to satisfy the contract.
+5. Reassess the acceptance criteria and test strategy during implementation.
+
+This process demonstrated that acceptance criteria do not necessarily map one-to-one to automated tests. Architectural constraints and design boundaries may be more appropriately verified through implementation review and documented architectural decisions. This principle is captured separately in the Test Architecture as **TAS-001**.
 
 ### Testing Approach
 
