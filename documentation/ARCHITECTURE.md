@@ -341,30 +341,107 @@ Foundry / Application Layer
 
 The following is a list of the key decisions made surrounding the design of the Core Service Architecture:
 
-| Identifier | Statement                                                                                      | Status   |
-| ---------- | ---------------------------------------------------------------------------------------------- | -------- |
-| CSA-001    | MAF Services encapsulate application/domain operations using explicit boundaries               | Accepted |
-| CSA-002    | MAF Services will have a contract defined by an interface                                      | Accepted |
-| CSA-003    | Milestone Advancement Service will orchestrate and provide access to MAF services              | Accepted |
-| CSA-004    | Milestone service operations to be defined                                                     | Deferred |
-| CSA-005    | Logger service provided through dependency injection to the MAF                                | Accepted |
-| CSA-006    | Compatibility Validator Service ensures compatibility with the game system and foudry versions | Accepted |
-| CSA-007    | Milestone creation and registration are separate operations                                    | Accepted |
-| CSA-008    | Milestone registration is implemented as a service                                             | Accepted |
-| CSA-009    | The registration service has an interface                                                      | Accepted |
-| CSA-010    | The milestone key is the registration identity                                                 | Accepted |
-| CSA-011    | Milestone keys must be unique within the registration mechanism                                | Accepted |
-| CSA-012    | Registration preserves the domain Milestone                                                    | Accepted |
-| CSA-013    | Domain validation remains the responsibility of the Milestone                                  | Accepted |
-| CSA-014    | Registration is independent of awarding                                                        | Accepted |
-| CSA-015    | Registration is system-agnostic                                                                | Accepted |
-| CSA-016    | Registration provides the retrieval boundary required by awarding                              | Accepted |
+| Identifier | Statement                                                                                       | Status   |
+| ---------- | ----------------------------------------------------------------------------------------------- | -------- |
+| CSA-001    | MAF Services encapsulate application/domain operations using explicit boundaries                | Accepted |
+| CSA-002    | MAF Services will have a contract defined by an interface                                       | Accepted |
+| CSA-003    | Milestone Advancement Service will orchestrate and provide access to MAF services               | Accepted |
+| CSA-004    | Milestone service operations to be defined                                                      | Deferred |
+| CSA-005    | Logger service provided through dependency injection to the MAF                                 | Accepted |
+| CSA-006    | Compatibility Validator Service ensures compatibility with the game system and foundry versions | Accepted |
+| CSA-007    | Milestone creation and registration are separate operations                                     | Accepted |
+| CSA-008    | Milestone registration is implemented as a service                                              | Accepted |
+| CSA-009    | The registration service has an interface                                                       | Accepted |
+| CSA-010    | The milestone key is the registration identity                                                  | Accepted |
+| CSA-011    | Milestone keys must be unique within the registration mechanism                                 | Accepted |
+| CSA-012    | Registration preserves the domain Milestone                                                     | Accepted |
+| CSA-013    | Domain validation remains the responsibility of the Milestone                                   | Accepted |
+| CSA-014    | Registration is independent of awarding                                                         | Accepted |
+| CSA-015    | Registration is system-agnostic                                                                 | Accepted |
+| CSA-016    | Registration provides the retrieval boundary required by awarding                               | Accepted |
 
 ### CSA-001 MAF Services encapsulate application/domain operations using explicit boundaries
 
 MAF services encapsulate application/domain operations and provide explicit boundaries between the domain model, system adapters, and Foundry/application infrastructure. Services are implemented as testable classes, with interfaces used where an explicit service contract is beneficial. System-specific behaviour is delegated to the system adapter layer rather than embedded within system-agnostic services.
 
-### CSA-002
+### CSA-002 MAF Services will have a contract defined by an interface
+
+MAF Services will have a contract, defined in an interface file using the following format:
+
+{Service File Name}-interface.ts
+
+The interface the members of the service without implementation, the class will implement the service contract.
+
+### CSA-003 Milestone Advancement Service will orchestrate and provide access to MAF services
+
+An important part of the module is orchestration which brings all of the functionality together. The Milestone Advancement Service will provide this function and provide access to the services and other functionality.
+
+### CSA-004 Milestone service operations to be defined
+
+The Milestone service operations are defined by its service contract. These operations are yet to be finalised.
+
+### CSA-005 Logger service provided through dependency injection to the MAF
+
+The Logger service which is one of the services managed by Milestone Advancement Service, will use dependency injection so that the Logger can be called whenever throughout the application as required.
+
+```text
+                    ┌──────────────────────────────┐
+                    │     MAF Service / Component   │
+                    │                              │
+                    │  depends on ILogger           │
+                    └──────────────┬───────────────┘
+                                   │
+                                   │ injected
+                                   ▼
+                         ┌───────────────────┐
+                         │     ILogger       │
+                         │    Interface      │
+                         └─────────┬─────────┘
+                                   ▲
+                                   │ implements
+                                   │
+                         ┌─────────┴─────────┐
+                         │ Logger Service /  │
+                         │    Implementation │
+                         └─────────┬─────────┘
+                                   │
+                                   ▼
+                         ┌───────────────────┐
+                         │ Foundry / Console │
+                         │   Logging Output  │
+                         └───────────────────┘
+```
+
+Logger services are provided through dependency injection. MAF services depend on the ILogger abstraction rather than directly depending on a concrete logging implementation. The concrete logger is supplied by the MAF composition/bootstrap layer. This maintains service testability and prevents application/domain services from becoming coupled to a specific logging implementation.
+
+### CSA-006 Compatibility Validator Service ensures compatibility with the game system and foundry versions
+
+The Compatibility Validator Service ensures compatibility with the game system and foundry by validating whether it is compatible and ensuring that the core components are available. It checks:
+
+- Foundry System is available
+- Game System is available and supported by the module
+
+Only if both passed does the Compatibility Validator Service allow the module to proceed.
+
+### CSA-007 Milestone creation and registration are separate operations
+
+### CSA-008 Milestone registration is implemented as a service
+
+### CSA-009 The registration service has an interface
+
+### CSA-010 The milestone key is the registration identity
+
+### CSA-011 Milestone keys must be unique within the registration mechanism
+
+### CSA-012 Registration preserves the domain Milestone
+
+### CSA-013 Domain validation remains the responsibility of the Milestone
+
+### CSA-014 Registration is independent of awarding
+
+### CSA-015 Registration is system-agnostic
+
+### CSA-016 Registration provides the retrieval boundary required by awarding
 
 ## System Adapter Architecture
 
