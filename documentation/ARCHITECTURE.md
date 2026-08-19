@@ -425,23 +425,169 @@ Only if both passed does the Compatibility Validator Service allow the module to
 
 ### CSA-007 Milestone creation and registration are separate operations
 
+A `Milestone` is created through the domain model independently of registration.
+
+Creating a `Milestone` does not automatically make it registered. Registration is an explicit operation performed through `MilestoneRegistrationService`.
+
+```text
+Milestone construction
+        ↓
+   Milestone exists
+        ↓
+ register(milestone)
+        ↓
+ Milestone is registered
+```
+
+This establishes a clear lifecycle boundary between **definition** and **registration**.
+
 ### CSA-008 Milestone registration is implemented as a service
+
+Registration is an application/domain-facing service responsibility rather than behaviour embedded directly within the `Milestone` entity.
+
+The implementation is:
+
+```text
+MilestoneRegistrationService
+```
+
+This gives MAF a dedicated mechanism for maintaining the collection of registered milestone definitions and provides a natural boundary for future operations such as awarding.
 
 ### CSA-009 The registration service has an interface
 
+Following the existing MAF service pattern, the registration service is exposed through:
+
+```text
+IMilestoneRegistrationService
+```
+
+with `MilestoneRegistrationService` providing the concrete implementation.
+
+This maintains consistency with the existing service architecture and leaves room for alternate implementations or substitution in tests.
+
 ### CSA-010 The milestone key is the registration identity
+
+Registration uses the milestone's existing stable `key`.
+
+The milestone's `name` is not treated as an identifier.
+
+Therefore:
+
+```text
+key: "defeat-strahd"
+name: "Defeat Strahd"
+```
+
+is identified by:
+
+```text
+defeat-strahd
+```
+
+rather than `"Defeat Strahd"`.
+
+This preserves the distinction established by MAF-2.1 between **human-readable milestone names and stable milestone identity**.
 
 ### CSA-011 Milestone keys must be unique within the registration mechanism
 
+The registration service maintains registered milestones keyed by their `key`.
+
+Attempting to register another milestone using an already registered key is rejected deterministically with an error.
+
+The existing registration is therefore not silently replaced.
+
+This gives us:
+
+```text
+register(A, "defeat-strahd")  → success
+register(B, "defeat-strahd")  → error
+```
+
+rather than:
+
+```text
+register(A, "defeat-strahd")  → success
+register(B, "defeat-strahd")  → overwrite A
+```
+
+This is important for the eventual awarding mechanism because a milestone's identity must remain unambiguous.
+
 ### CSA-012 Registration preserves the domain Milestone
+
+The registration service stores the `Milestone` domain object rather than creating a separate registration representation.
+
+Retrieval therefore returns the registered domain object with its domain information and metadata intact.
+
+This keeps the registration mechanism lightweight and avoids unnecessary transformation between domain representations.
 
 ### CSA-013 Domain validation remains the responsibility of the Milestone
 
+MAF-2.1 established that a `Milestone` cannot normally be instantiated unless its domain invariants are satisfied.
+
+Therefore MAF-2.2 does not **duplicate those validations** in the registration service.
+
+The boundary is:
+
+```text
+Milestone constructor
+    ↓
+ensures valid Milestone
+    ↓
+MilestoneRegistrationService
+    ↓
+registers valid Milestone
+```
+
+This avoids redundant validation logic and keeps domain invariants in the domain model.
+
+The registration service is concerned with **registration rules**, such as duplicate identity, rather than reconstructing the validity rules of the entity.
+
 ### CSA-014 Registration is independent of awarding
+
+Registering a milestone does **not** create a `MilestoneAward` and does not alter advancement/progression state.
+
+A registered milestone represents a milestone definition that is available to subsequent MAF operations.
+
+The awarding lifecycle will be introduced separately by **MAF-2.3**.
+
+Conceptually:
+
+```text
+Milestone
+    ↓
+Registration
+    ↓
+Registered Milestone
+    ↓
+       [MAF-2.3]
+    ↓
+MilestoneAward
+```
+
+This keeps **registration** and **awarding** as distinct responsibilities.
 
 ### CSA-015 Registration is system-agnostic
 
+`MilestoneRegistrationService` operates exclusively against the system-agnostic MAF domain model.
+
+Registration does not require:
+
+- a Foundry `Actor`;
+- a Foundry game-system document;
+- a system adapter;
+- system-specific data.
+
+System-specific concerns therefore remain outside the milestone registration mechanism.
+
+This preserves the system-agnostic architecture established for MAF.
+
 ### CSA-016 Registration provides the retrieval boundary required by awarding
+
+The registration service exposes retrieval by milestone key.
+
+This provides MAF-2.3 with the mechanism it needs to locate a registered milestone before creating an award.
+
+We therefore don't need an additional "MAF-2.3 integration" mechanism inside MAF-2.2.
 
 ## System Adapter Architecture
 
