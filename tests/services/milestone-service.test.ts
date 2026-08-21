@@ -123,5 +123,65 @@ describe('MilestoneService', () => {
 
       expect(award.reason).toBe(reason);
     });
+
+    it('awards a milestone successfully when no reason is provided', () => {
+      const milestone = new Milestone({
+        key: 'defeat-strahd',
+        name: 'Defeat Strahd',
+        description: 'The party defeats Strahd von Zarovich.',
+        createdBy: 'test-gm',
+        createdAt: new Date(),
+      });
+
+      const registrationService = new MilestoneRegistrationService();
+      registrationService.register(milestone);
+
+      const service = new MilestoneService(registrationService);
+
+      const award = service.awardMilestone('defeat-strahd', 'test-gm', new Date());
+
+      expect(award).toBeInstanceOf(MilestoneAward);
+      expect(award.reason).toBeUndefined();
+    });
+  });
+
+  it('creates a distinct award record when the same milestone is awarded multiple times', () => {
+    const milestone = new Milestone({
+      key: 'defeat-strahd',
+      name: 'Defeat Strahd',
+      description: 'The party defeats Strahd von Zarovich.',
+      createdBy: 'test-gm',
+      createdAt: new Date(),
+    });
+
+    const registrationService = new MilestoneRegistrationService();
+    registrationService.register(milestone);
+
+    const service = new MilestoneService(registrationService);
+
+    const firstAward = service.awardMilestone(
+      'defeat-strahd',
+      'test-gm',
+      new Date('2026-08-21T10:00:00Z'),
+    );
+
+    const secondAward = service.awardMilestone(
+      'defeat-strahd',
+      'test-gm',
+      new Date('2026-08-21T11:00:00Z'),
+    );
+
+    expect(firstAward).toBeInstanceOf(MilestoneAward);
+    expect(secondAward).toBeInstanceOf(MilestoneAward);
+    expect(secondAward).not.toBe(firstAward);
+  });
+
+  it('rejects awarding an unregistered milestone', () => {
+    const registrationService = new MilestoneRegistrationService();
+    const service = new MilestoneService(registrationService);
+
+    expect(() => service.awardMilestone('defeat-strahd', 'test-gm', new Date())).toThrow(
+      'Milestone with key defeat-strahd is unregistered or does not exist',
+    );
   });
 });
