@@ -3,5 +3,10 @@
 import { MAFIdentity, MilestoneAward } from '../domain';
 
 export interface IMilestoneService {
-  awardMilestone(milestoneKey: string, awardedBy: MAFIdentity, awardedAt: Date): MilestoneAward;
+  awardMilestone(
+    milestoneKey: string,
+    awardedBy: MAFIdentity,
+    awardedAt: Date,
+    reason?: string,
+  ): MilestoneAward;
 }
